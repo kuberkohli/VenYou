@@ -1,16 +1,13 @@
-package com.venyou.venyou;
+package com.venyou.venyou.View;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -18,15 +15,18 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.squareup.picasso.Picasso;
+
+import com.venyou.venyou.R;
 
 public class FacebookActivity extends AppCompatActivity {
 
@@ -53,21 +53,36 @@ public class FacebookActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() != null) {
             userId = AccessToken.getCurrentAccessToken().getUserId();
             url = "https://graph.facebook.com/" + userId + "/picture?type=large";
-            name = Profile.getCurrentProfile().getName();
-            Bundle userData = new Bundle();
-            userData.putString("name", name);
-            userData.putString("url", url);
-            userData.putString("userId", userId);
-            Intent intent = new Intent(getApplicationContext(), Home.class);
-            intent.putExtras(userData);
-            startActivity(intent);
+            /* make the API call */
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    userId,
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                name = response.getJSONObject().getString("name");
+                                Bundle userData = new Bundle();
+                                userData.putString("name", name);
+                                userData.putString("url", url);
+                                userData.putString("userId", userId);
+                                Intent intent = new Intent(getApplicationContext(), Home.class);
+                                intent.putExtras(userData);
+                                startActivity(intent);
+                            } catch (JSONException e) {
+                                Log.e("MYAPP", "unexpected JSON exception", e);
+                                // Do something to recover ... or kill the app.
+                            }
+                        }
+                    }
+            ).executeAsync();
         }
         else{
             //login process
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-                    login_status.setText("Login Success :" + loginResult.getAccessToken().getUserId());
                     userId = loginResult.getAccessToken().getUserId();
                     url = "https://graph.facebook.com/" + userId + "/picture?type=large";
 
@@ -77,31 +92,24 @@ public class FacebookActivity extends AppCompatActivity {
                                 @Override
                                 public void onCompleted(JSONObject object, GraphResponse response) {
                                     Log.v("LoginActivity", response.toString());
-
-                                    // Application code
                                     try {
-                                        login_status.setText("Welcome ! "+object.getString("name"));
-                                        email = object.getString("email");
-                                        name = object.getString("name");
-                                        birthday = object.getString("birthday"); // 01/31/1980 format
+                                        name = response.getJSONObject().getString("name");
+                                        Bundle userData = new Bundle();
+                                        userData.putString("name", name);
+                                        userData.putString("url", url);
+                                        userData.putString("userId", userId);
+                                        Intent intent = new Intent(getApplicationContext(), Home.class);
+                                        intent.putExtras(userData);
+                                        startActivity(intent);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
                             });
                     Bundle parameters = new Bundle();
                     parameters.putString("fields", "id,name,email,gender,birthday");
                     request.setParameters(parameters);
                     request.executeAsync();
-
-                    Bundle userData = new Bundle();
-                    userData.putString("name", name);
-                    userData.putString("url", url);
-                    userData.putString("userId", userId);
-                    Intent intent = new Intent(getApplicationContext(), Home.class);
-                    intent.putExtras(userData);
-                    startActivity(intent);
 
                 }
 

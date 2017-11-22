@@ -1,4 +1,4 @@
-package com.venyou.venyou;
+package com.venyou.venyou.View;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -24,11 +24,12 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
+import com.venyou.venyou.R;
+import com.venyou.venyou.View.FacebookActivity;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -66,7 +67,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        name = Profile.getCurrentProfile().getName();
+        name = getIntent().getExtras().getString("name");
         View view = (View)navigationView.getHeaderView(0);
         TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
         textView_name.setText(name);
