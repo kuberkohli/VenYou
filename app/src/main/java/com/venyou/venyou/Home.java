@@ -1,5 +1,6 @@
 package com.venyou.venyou;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,14 +22,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.squareup.picasso.Picasso;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
+    private ImageView propic;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -58,6 +66,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        name = Profile.getCurrentProfile().getName();
+        View view = (View)navigationView.getHeaderView(0);
+        TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
+        textView_name.setText(name);
+        propic = (ImageView) view.findViewById(R.id.imageView);
+
+        Picasso.with(getApplicationContext())
+                .load(getIntent().getExtras().getString("url"))
+                .into(propic);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -94,10 +113,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(this,FacebookActivity.class); startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,7 +175,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
