@@ -64,8 +64,6 @@ public class Home_fragment extends android.support.v4.app.Fragment {
         eventData = new EventData();
         recyclerView = (RecyclerView) view.findViewById(R.id.recviewer1);
 
-        final android.widget.ViewAnimator viewAnimator = (android.widget.ViewAnimator) view.findViewById(R.id.animator);
-
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(myFirebaseRecylerAdapter);

@@ -141,6 +141,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if (id == R.id.action_logout){
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(this,FacebookActivity.class); startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
