@@ -42,9 +42,11 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
 
         String name = (String) event.getName();
         String state = (String) event.getState();
+        String url = (String) event.getPic();
 
         viewHolder.name.setText((String) name);
         viewHolder.state.setText("State :"+(String) state);
+        Picasso.with(mContext).load(url).into(viewHolder.image);
     }
 
 
@@ -65,11 +67,13 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
 
         public TextView name;
         public TextView state;
+        public ImageView image;
         private View container;
         public EventViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.event_name);
             state = (TextView) v.findViewById(R.id.event_state);
+            image = (ImageView) v.findViewById(R.id.imageView);
             container = v.findViewById(R.id.list_item_layout);
 
             // by this we are just registering the click Event on the whole view i.e. view in our case

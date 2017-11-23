@@ -27,15 +27,27 @@
             <LinearLayout
                 android:id="@+id/list_item_inner_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="10dp">
 
                 <TextView
                     android:id="@+id/event_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:paddingTop="40dp"
                     android:fontFamily="sans-serif-black"
                     android:textColor="#fafafa"
                     android:textSize="30dp"
@@ -55,6 +67,7 @@
                     android:singleLine="true"
                     android:text="Anything here"
                     android:textStyle="bold" />
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
 
-    String Name, Venue, City, State, id;
+    String Name, Venue, City, State, id, pic;
 
     public Event(){
 
@@ -52,5 +52,13 @@ public class Event implements Serializable {
 
     public void setState(String state) {
         this.State = State;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 }
