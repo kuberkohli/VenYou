@@ -46,8 +46,14 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         //TODO: Populate viewHolder by setting the movie attributes to cardview fields
 
         String name = (String) event.getName();
+        String city = (String) event.getCity();
+        String state = (String) event.getState();
+        String venue = (String) event.getVenue();
 
         viewHolder.name.setText((String) name);
+        viewHolder.city.setText("City :"+(String) city);
+        viewHolder.state.setText("State :"+(String) state);
+        viewHolder.venue.setText("Venue : "+(String) venue);
     }
 
 

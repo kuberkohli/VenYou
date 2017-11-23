@@ -8,41 +8,49 @@ import java.io.Serializable;
 
 public class Event implements Serializable {
 
+    String Name, Venue, City, State, id;
+
     public Event(){
 
     }
 
-    String name, venue, city, state;
-
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = Name;
     }
 
     public String getVenue() {
-        return venue;
+        return Venue;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setVenue(String venue) {
-        this.venue = venue;
+        this.Venue = venue;
     }
 
     public String getCity() {
-        return city;
+        return City;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        this.City = City;
     }
 
     public String getState() {
-        return state;
+        return State;
     }
 
     public void setState(String state) {
-        this.state = state;
+        this.State = State;
     }
 }

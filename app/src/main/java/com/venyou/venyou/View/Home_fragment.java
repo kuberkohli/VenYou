@@ -22,7 +22,7 @@ import com.venyou.venyou.R;
 import java.util.HashMap;
 
 
-public class Home_fragment extends Fragment {
+public class Home_fragment extends android.support.v4.app.Fragment {
 
     private static RecyclerView recyclerView;
 
@@ -55,7 +55,7 @@ public class Home_fragment extends Fragment {
         // Inflate the layout for this fragment
 
         final View view = inflater.inflate(R.layout.home_fragment, container, false);
-        childRef =  FirebaseDatabase.getInstance().getReference().child("Gym").getRef();
+        childRef =  FirebaseDatabase.getInstance().getReference().child("event_app").getRef();
 
 
         myFirebaseRecylerAdapter = new MyFirebaseRecylerAdapter(Event.class, R.layout.home_fragment_cardview,
@@ -68,8 +68,6 @@ public class Home_fragment extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        SlideInOutBottomItemAnimator animator = new SlideInOutBottomItemAnimator(recyclerView);
-//        recyclerView.setItemAnimator(animator);
         recyclerView.setAdapter(myFirebaseRecylerAdapter);
 
         if (eventData.getSize() == 0) {
@@ -125,12 +123,12 @@ public class Home_fragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override

@@ -56,8 +56,8 @@ public class EventData {
         int position = -1;
         String id=(String)item.get("id");
         for(int i=0;i<eventlist.size();i++){
-            HashMap movie = (HashMap)eventlist.get(i);
-            String mid = (String)movie.get("id");
+            HashMap event = (HashMap)eventlist.get(i);
+            String mid = (String)event.get("id");
             if(mid.equals(id)){
                 position= i;
                 break;
@@ -65,17 +65,15 @@ public class EventData {
         }
         if(position != -1){
             eventlist.remove(position);
-            Toast.makeText(mContext, "Item Removed:" + id, Toast.LENGTH_SHORT).show();
-
         }
     }
 
     public void onItemAddedToCloud(HashMap item){
         int insertPosition = 0;
-        String id=(String)item.get("id");
+        String id= item.get("id").toString();
         for(int i=0;i<eventlist.size();i++){
-            HashMap movie = (HashMap)eventlist.get(i);
-            String mid = (String)movie.get("id");
+            HashMap event = (HashMap)eventlist.get(i);
+            String mid = (String)event.get("id");
             if(mid.equals(id)){
                 return;
             }
@@ -86,25 +84,22 @@ public class EventData {
             }
         }
         eventlist.add(insertPosition,item);
-        //  Toast.makeText(mContext, "Item added:" + id, Toast.LENGTH_SHORT).show();
-
     }
 
     public void onItemUpdatedToCloud(HashMap item){
         String id=(String)item.get("id");
         for(int i=0;i<eventlist.size();i++){
-            HashMap movie = (HashMap)eventlist.get(i);
-            String mid = (String)movie.get("id");
+            HashMap event = (HashMap)eventlist.get(i);
+            String mid = (String)event.get("id");
             if(mid.equals(id)){
                 eventlist.remove(i);
                 eventlist.add(i,item);
-                Log.d("My Test: NotifyChanged",id);
-
                 break;
             }
         }
 
     }
+
     public void initializeDataFromCloud() {
         eventlist.clear();
         mRef.addChildEventListener(new com.google.firebase.database.ChildEventListener() {
