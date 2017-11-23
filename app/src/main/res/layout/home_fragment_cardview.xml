@@ -20,7 +20,7 @@
             android:layout_height="145dp"
             android:background="#017c71"
             android:clickable="true"
-            android:gravity="center_vertical|left"
+            android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="6dp">
 
@@ -28,6 +28,7 @@
                 android:id="@+id/list_item_inner_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -36,41 +37,12 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-black"
-                    android:gravity="center"
                     android:textColor="#fafafa"
-                    android:textSize="20dp"
-                    android:paddingLeft="12dp"
+                    android:textSize="30dp"
                     android:singleLine="true"
                     android:text="Anything here"
                     android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/event_venue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingLeft="12dp"
-                    android:textColor="#fafafa"
-                    android:textSize="20dp"
-                    android:fontFamily="sans-serif-thin"
-                    android:text="Anything here"
-                    android:layout_marginTop="10dp"
-                    android:textStyle="bold"/>
-
-
-                <TextView
-                    android:id="@+id/event_city"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-thin"
-                    android:gravity="center"
-                    android:textColor="#fafafa"
-                    android:textSize="20dp"
-                    android:paddingLeft="8dp"
-                    android:singleLine="true"
-                    android:text="Anything here"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/event_state"
@@ -78,10 +50,8 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:fontFamily="sans-serif-thin"
-                    android:gravity="center"
                     android:textColor="#fafafa"
                     android:textSize="20dp"
-                    android:paddingLeft="8dp"
                     android:singleLine="true"
                     android:text="Anything here"
                     android:textStyle="bold" />

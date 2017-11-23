@@ -19,7 +19,7 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
     private Context mContext;
 
 
-    static RecyclerItemClickListener movieItemClickListener;
+    static RecyclerItemClickListener itemClickListener;
 
     public MyFirebaseRecylerAdapter(Class<Event> modelClass, int modelLayout,
                                     Class<EventViewHolder> holder, DatabaseReference ref, Context context) {
@@ -29,15 +29,10 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
 
     public interface RecyclerItemClickListener{
         void onItemClick(View view, int position);
-        void onItemLongClick(View view, int position);
-
-        void onOverFlowMenuClick(View v, int position);
-
-        public void onCheckBoxClick(View v, int position);
     }
 
     public void SetOnItemClickListner(final  MyFirebaseRecylerAdapter.RecyclerItemClickListener mItemClickListner) {
-        this.movieItemClickListener = mItemClickListner;
+        this.itemClickListener = mItemClickListner;
     }
 
     @Override
@@ -46,14 +41,10 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         //TODO: Populate viewHolder by setting the movie attributes to cardview fields
 
         String name = (String) event.getName();
-        String city = (String) event.getCity();
         String state = (String) event.getState();
-        String venue = (String) event.getVenue();
 
         viewHolder.name.setText((String) name);
-        viewHolder.city.setText("City :"+(String) city);
         viewHolder.state.setText("State :"+(String) state);
-        viewHolder.venue.setText("Venue : "+(String) venue);
     }
 
 
@@ -73,46 +64,26 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
     public static class EventViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
-        public TextView venue;
-        public TextView city;
         public TextView state;
         private View container;
         public EventViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.event_name);
-            city = (TextView) v.findViewById(R.id.event_city);
             state = (TextView) v.findViewById(R.id.event_state);
-            venue = (TextView) v.findViewById(R.id.event_venue);
-//            container = v.findViewById(R.id.list_item_layout);
-//
-//            // by this we are just registering the click Event on the whole view i.e. view in our case
-//            container.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View v){
-//
-//                    if(movieItemClickListener != null){
-//                        if(getAdapterPosition() != RecyclerView.NO_POSITION){
-//                            movieItemClickListener.onItemClick(v, getAdapterPosition());
-//                        }
-//                    }
-//                }
-//            });
-//
-//            v.setOnLongClickListener(new View.OnLongClickListener(){
-//
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    if(movieItemClickListener != null){
-//                        if(getAdapterPosition() != RecyclerView.NO_POSITION){
-//                            // to make a click Event generic, we are not performing any action here. we are just calling
-//                            // another function..
-//                            movieItemClickListener.onItemLongClick(v, getAdapterPosition());
-//                        }
-//                    }
-//                    return true;
-//                }
-//            });
+            container = v.findViewById(R.id.list_item_layout);
 
+            // by this we are just registering the click Event on the whole view i.e. view in our case
+            container.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+
+                    if(itemClickListener != null){
+                        if(getAdapterPosition() != RecyclerView.NO_POSITION){
+                            itemClickListener.onItemClick(v, getAdapterPosition());
+                        }
+                    }
+                }
+            });
         }
     }
 

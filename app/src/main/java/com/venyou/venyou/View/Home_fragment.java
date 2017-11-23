@@ -43,6 +43,12 @@ public class Home_fragment extends android.support.v4.app.Fragment {
         return fragment;
     }
 
+    public interface InterfaceEventData{
+        void DisplayEventData(int position, HashMap<String, ?> eventDetails);
+    }
+
+    InterfaceEventData interfaceEventData;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +63,7 @@ public class Home_fragment extends android.support.v4.app.Fragment {
         final View view = inflater.inflate(R.layout.home_fragment, container, false);
         childRef =  FirebaseDatabase.getInstance().getReference().child("event_app").getRef();
 
-
+        interfaceEventData = (InterfaceEventData) view.getContext();
         myFirebaseRecylerAdapter = new MyFirebaseRecylerAdapter(Event.class, R.layout.home_fragment_cardview,
                 MyFirebaseRecylerAdapter.EventViewHolder.class, childRef, getContext());
 
@@ -74,59 +80,27 @@ public class Home_fragment extends android.support.v4.app.Fragment {
             eventData.initializeDataFromCloud();
         }
         setHasOptionsMenu(true);
-//
-//        myFirebaseRecylerAdapter.SetOnItemClickListner(new MyFirebaseRecylerAdapter.RecyclerItemClickListener(){
-//
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                final HashMap<String, ?> workoutDetails = (HashMap<String, ?>) workoutData.getItem(position);
-//                normalClick(position, workoutDetails);
-//            }
-//
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-//
-//            }
-//
-//            @Override
-//            public void onOverFlowMenuClick(View v, final int position){
-//                PopupMenu popup = new PopupMenu(getActivity(), v);
-//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
-//
-//                    @Override
-//                    public boolean onMenuItemClick(MenuItem item) {
-//                        HashMap movie;
-//                        switch (item.getItemId()){
-//                            default:
-//                                return false;
-//                        }
-//                    }
-//                });
-//            }
-//
-//            public void normalClick(int pos, HashMap<String, ?> mov){
-//                interfaceWorkoutDataData.DisplayWorkoutData(pos, mov);
-//            }
-//
-//            @Override
-//            public void onCheckBoxClick(View v, int position) {
-//
-//            }
-//        });
+
+        myFirebaseRecylerAdapter.SetOnItemClickListner(new MyFirebaseRecylerAdapter.RecyclerItemClickListener(){
+
+            @Override
+            public void onItemClick(View view, int position) {
+                final HashMap<String, ?> eventDetails = (HashMap<String, ?>) eventData.getItem(position);
+                normalClick(position, eventDetails);
+            }
+        });
 
         return view;
 
     }
 
+    public void normalClick(int pos, HashMap<String, ?> eventDetails){
+        interfaceEventData.DisplayEventData(pos, eventDetails);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override

@@ -31,7 +31,9 @@ import com.squareup.picasso.Picasso;
 import com.venyou.venyou.R;
 import com.venyou.venyou.View.FacebookActivity;
 
-public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+import java.util.HashMap;
+
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,Home_fragment.InterfaceEventData{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -147,6 +149,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void DisplayEventData(int position, HashMap<String, ?> eventDetails) {
+        Intent intent = new Intent(getApplicationContext(), EventDetails.class);
+        intent.putExtra("eventData", eventDetails);
+        startActivity(intent);
     }
 
     /**
