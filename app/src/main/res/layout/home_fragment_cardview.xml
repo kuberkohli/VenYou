@@ -18,12 +18,12 @@
             android:id="@+id/list_item_layout"
             android:layout_width="match_parent"
             android:layout_height="145dp"
-            android:background="#011d40"
+            android:background="#012f68"
             android:clickable="true"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="6dp">
-
+            <!--blue = 011d40-->
             <LinearLayout
                 android:id="@+id/list_item_inner_layout"
                 android:layout_width="match_parent"

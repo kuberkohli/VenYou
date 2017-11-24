@@ -22,7 +22,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="bottom"
             android:layout_marginRight="90dp"
-            android:backgroundTint="#e98103"
+            android:backgroundTint="#960008"
             android:src="@drawable/chat" />
 
         <android.support.design.widget.FloatingActionButton
@@ -35,7 +35,7 @@
             android:layout_margin="20dp"
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            android:backgroundTint="#e98103"
+            android:backgroundTint="#960008"
             android:src="@drawable/add" />
     </RelativeLayout>
 </FrameLayout>
