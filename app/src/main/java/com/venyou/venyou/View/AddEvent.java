@@ -59,41 +59,46 @@ public class AddEvent extends AppCompatActivity {
     public void addEvent(View view){
 
         final EventData eventData = new EventData();
-        event.clear();;
-        event.put("Name",name_text.getText().toString());
-        event.put("City", city_text.getText().toString());
-        event.put("State", state_text.getText().toString());
-        event.put("Venue", venue_text.getText().toString());
-        event.put("id",name_text.getText().toString());
+        event.clear();
+        if(name_text.getText().toString().equals("") || city_text.getText().toString().equals("") || state_text.getText().toString().equals("") || venue_text.getText().toString().equals("") || imageUri == null){
+            Toast.makeText(getApplicationContext(),"Please fill all the fields and select and image",Toast.LENGTH_SHORT).show();
+        }else{
+            event.put("Name",name_text.getText().toString());
+            event.put("City", city_text.getText().toString());
+            event.put("State", state_text.getText().toString());
+            event.put("Venue", venue_text.getText().toString());
+            event.put("id",name_text.getText().toString());
 
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://venyou-1ca06.appspot.com/");
+            FirebaseStorage storage = FirebaseStorage.getInstance("gs://venyou-1ca06.appspot.com/");
 
-        // Create a storage reference from our app
-        StorageReference storageRef = storage.getReference();
+            // Create a storage reference from our app
+            StorageReference storageRef = storage.getReference();
 
-        Uri file = imageUri;
-        StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
-        UploadTask uploadTask = riversRef.putFile(file);
+            Uri file = imageUri;
+            StorageReference riversRef = storageRef.child("images/"+file.getLastPathSegment());
+            UploadTask uploadTask = riversRef.putFile(file);
 
-        // Register observers to listen for when the download is done or if it fails
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Toast.makeText(getApplicationContext(),"failed : "+exception, Toast.LENGTH_SHORT).show();
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                event.put("pic", downloadUrl.toString());
-                eventData.uploadToFirebase(event);
-            }
-        });
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                    Toast.makeText(getApplicationContext(),"failed : "+exception, Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    event.put("pic", downloadUrl.toString());
+                    eventData.uploadToFirebase(event);
+                }
+            });
 
-        Intent intent = new Intent(AddEvent.this,Home.class);
-        startActivity(intent);
+            Intent intent = new Intent(AddEvent.this,Home.class);
+            startActivity(intent);
+        }
+
     }
 
     public void chooseImage(View view){
@@ -105,8 +110,10 @@ public class AddEvent extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUri = data.getData();
-        image.setImageURI(null);
-        image.setImageURI(imageUri);
+        if (data != null){
+            imageUri = data.getData();
+            image.setImageURI(null);
+            image.setImageURI(imageUri);
+        }
     }
 }
