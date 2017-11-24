@@ -5,6 +5,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.squareup.picasso.Picasso;
+import com.venyou.venyou.Model.EventData;
 import com.venyou.venyou.R;
 import com.venyou.venyou.View.FacebookActivity;
 
@@ -78,18 +80,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Picasso.with(getApplicationContext())
                 .load(getIntent().getExtras().getString("url"))
                 .into(propic);
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
     @Override
@@ -152,9 +142,15 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     @Override
-    public void DisplayEventData(int position, HashMap<String, ?> eventDetails) {
+    public void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name) {
         Intent intent = new Intent(getApplicationContext(), EventDetails.class);
         intent.putExtra("eventData", eventDetails);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onClickAddEvent() {
+        Intent intent = new Intent(Home.this,AddEvent.class);
         startActivity(intent);
     }
 

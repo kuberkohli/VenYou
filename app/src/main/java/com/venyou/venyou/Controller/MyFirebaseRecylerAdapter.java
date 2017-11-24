@@ -1,6 +1,7 @@
 package com.venyou.venyou.Controller; //change the package name to your project's package name
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 import com.venyou.venyou.Model.Event;
+
 import com.venyou.venyou.R;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
     }
 
     public interface RecyclerItemClickListener{
-        void onItemClick(View view, int position);
+        void onItemClick(View view, int position, String name);
     }
 
     public void SetOnItemClickListner(final  MyFirebaseRecylerAdapter.RecyclerItemClickListener mItemClickListner) {
@@ -43,9 +45,9 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         String name = (String) event.getName();
         String state = (String) event.getState();
         String url = (String) event.getPic();
-
-        viewHolder.name.setText((String) name);
-        viewHolder.state.setText("State :"+(String) state);
+        viewHolder.bundle.putString("name",name);
+        viewHolder.name.setText(name);
+        viewHolder.state.setText("State :"+ state);
         Picasso.with(mContext).load(url).into(viewHolder.image);
     }
 
@@ -69,6 +71,7 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         public TextView state;
         public ImageView image;
         private View container;
+        private Bundle bundle = new Bundle();
         public EventViewHolder(View v) {
             super(v);
             name = (TextView) v.findViewById(R.id.event_name);
@@ -80,10 +83,10 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
             container.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-
                     if(itemClickListener != null){
                         if(getAdapterPosition() != RecyclerView.NO_POSITION){
-                            itemClickListener.onItemClick(v, getAdapterPosition());
+                            String name = (String) bundle.get("name");
+                            itemClickListener.onItemClick(v, getAdapterPosition(), name);
                         }
                     }
                 }

@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.venyou.venyou.Controller.MyFirebaseRecylerAdapter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +19,9 @@ import java.util.Map;
  * Created by kuberkohli on 11/21/17.
  */
 
-public class EventData {
+public class EventData implements Serializable{
 
-    List<Map<String,?>> eventlist;
+    ArrayList<Map<String,?>> eventlist;
     DatabaseReference mRef;
     MyFirebaseRecylerAdapter myFirebaseRecylerAdapter;
     Context mContext;
@@ -45,10 +46,15 @@ public class EventData {
         return eventlist.size();
     }
 
-    public HashMap getItem(int i){
-        if (i >=0 && i < eventlist.size()){
-            return (HashMap) eventlist.get(i);
-        } else return null;
+    public HashMap getItem(String s){
+        for(int i=0;i<eventlist.size();i++){
+            HashMap event = (HashMap)eventlist.get(i);
+            String name = (String)event.get("Name");
+            if (name.equals(s)){
+                return event;
+                }
+        }
+       return null;
     }
 
 
@@ -135,6 +141,13 @@ public class EventData {
             }
         });
 
+    }
+
+    public void uploadToFirebase(Map item){
+        if(item != null){
+            String name = item.get("Name").toString();
+            mRef.child(name).setValue(item);
+        }
     }
 
     public EventData(){

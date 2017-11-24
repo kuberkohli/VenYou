@@ -36,9 +36,9 @@ public class EventDetails extends AppCompatActivity {
             image = (ImageView) findViewById(R.id.event_image);
             eventDetails = (HashMap<String, ?>) getIntent().getSerializableExtra("eventData");
             name.setText((String)eventDetails.get("Name"));
-            city.setText((String)eventDetails.get("City"));
-            state.setText((String)eventDetails.get("State"));
-            venue.setText((String)eventDetails.get("Venue"));
+            city.setText("City : "+(String)eventDetails.get("City"));
+            state.setText("State : "+(String)eventDetails.get("State"));
+            venue.setText("Venue : "+(String)eventDetails.get("Venue"));
             Picasso.with(getApplicationContext()).load((String) eventDetails.get("pic")).into(image);
     }
 

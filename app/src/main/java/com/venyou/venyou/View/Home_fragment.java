@@ -1,9 +1,13 @@
 package com.venyou.venyou.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +48,8 @@ public class Home_fragment extends android.support.v4.app.Fragment {
     }
 
     public interface InterfaceEventData{
-        void DisplayEventData(int position, HashMap<String, ?> eventDetails);
+        void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name);
+        void onClickAddEvent();
     }
 
     InterfaceEventData interfaceEventData;
@@ -84,9 +89,26 @@ public class Home_fragment extends android.support.v4.app.Fragment {
         myFirebaseRecylerAdapter.SetOnItemClickListner(new MyFirebaseRecylerAdapter.RecyclerItemClickListener(){
 
             @Override
-            public void onItemClick(View view, int position) {
-                final HashMap<String, ?> eventDetails = (HashMap<String, ?>) eventData.getItem(position);
-                normalClick(position, eventDetails);
+            public void onItemClick(View view, int position, String name) {
+                final HashMap<String, ?> eventDetails = (HashMap<String, ?>) eventData.getItem(name);
+                normalClick(position, eventDetails, view,name);
+            }
+        });
+
+        FloatingActionButton chat = (FloatingActionButton) view.findViewById(R.id.chat_button);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        FloatingActionButton addEvent = (FloatingActionButton) view.findViewById(R.id.addEvent_button);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                interfaceEventData.onClickAddEvent();
             }
         });
 
@@ -94,8 +116,8 @@ public class Home_fragment extends android.support.v4.app.Fragment {
 
     }
 
-    public void normalClick(int pos, HashMap<String, ?> eventDetails){
-        interfaceEventData.DisplayEventData(pos, eventDetails);
+    public void normalClick(int pos, HashMap<String, ?> eventDetails, View view, String name){
+        interfaceEventData.DisplayEventData(pos, eventDetails, view, name);
     }
 
     @Override

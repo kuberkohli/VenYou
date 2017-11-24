@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:paddingTop="40dp"
+                    android:paddingLeft="10dp"
                     android:fontFamily="sans-serif-black"
                     android:textColor="#fafafa"
                     android:textSize="30dp"
@@ -55,18 +56,29 @@
                     android:text="Anything here"
                     android:textStyle="italic" />
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/event_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="sans-serif-thin"
-                    android:textColor="#fafafa"
-                    android:textSize="20dp"
-                    android:singleLine="true"
-                    android:text="Anything here"
-                    android:textStyle="bold" />
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/location"/>
+
+                    <TextView
+                        android:id="@+id/event_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-thin"
+                        android:textColor="#fafafa"
+                        android:textSize="20dp"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:text="Anything here"
+                        android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
