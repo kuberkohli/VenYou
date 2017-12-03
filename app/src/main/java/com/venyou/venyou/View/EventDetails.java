@@ -1,9 +1,7 @@
 package com.venyou.venyou.View;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.constraint.Group;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,9 +15,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
-//import com.venyou.venyou.R;
-import c.R;
+
 import java.util.HashMap;
+
+import c.R;
+
+//import com.venyou.venyou.R;
 
 public class EventDetails extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class EventDetails extends AppCompatActivity {
     private HashMap<String, ?> eventDetails;
     private Button button;
     private String register_check, host_rating;
+    private Button makePayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class EventDetails extends AppCompatActivity {
         time = (TextView) findViewById(R.id.event_time);
         image = (ImageView) findViewById(R.id.event_image);
         button = (Button) findViewById(R.id.register_event);
+        makePayment = (Button) findViewById(R.id.paypal);
         ratingBar = (RatingBar) findViewById(R.id.host_ratings);
 
         eventDetails = (HashMap<String, ?>) getIntent().getSerializableExtra("eventData");
@@ -110,6 +113,14 @@ public class EventDetails extends AppCompatActivity {
 
 
 
+            }
+        });
+
+        makePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDetails.this, PaypalActivity.class);
+                startActivity(intent);
             }
         });
     }
