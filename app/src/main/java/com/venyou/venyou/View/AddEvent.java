@@ -127,7 +127,7 @@ public class AddEvent extends AppCompatActivity {
             event.put("latitude", Double.toString(latitude));
             event.put("host_rating", "4");
             if(event_time != null) event.put("time",event_time);
-            if(event_date != null) event.put("date",event_date);
+            if(event_date != null) event.put("date",event_date+" "+event_time);
 
             FirebaseStorage storage = FirebaseStorage.getInstance("gs://venyou-1ca06.appspot.com/");
 
@@ -217,7 +217,7 @@ public class AddEvent extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
-            event_date = Integer.toString(day) + "-" +Integer.toString(month) + "-" + Integer.toString(year);
+            event_date = Integer.toString(year) + "-" +Integer.toString(month) + "-" + Integer.toString(day);
         }
     }
 }

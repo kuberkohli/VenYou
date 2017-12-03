@@ -15,6 +15,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.venyou.venyou.Model.Event;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import c.R;
@@ -49,6 +51,14 @@ public class Attending_FirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Ev
         final String name = (String) event.getName();
         final String state = (String) event.getState();
         final String url = (String) event.getImage();
+        final String eventdate = (String) event.getDate();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar c = Calendar.getInstance();
+        String currentDate = df.format(c.getTime());
+        if (currentDate.compareTo(eventdate) > 0) {
+            viewHolder.event_date_check.setVisibility(View.VISIBLE);
+        }
         viewHolder.bundle.putString("name",name);
         viewHolder.name.setText(name);
         viewHolder.state.setText("State :"+ state);
@@ -74,6 +84,7 @@ public class Attending_FirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Ev
         public TextView name;
         public TextView state;
         public ImageView image;
+        public ImageView event_date_check;
         private View container;
         private Bundle bundle = new Bundle();
         public EventViewHolder(View v) {
@@ -81,6 +92,8 @@ public class Attending_FirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Ev
             name = (TextView) v.findViewById(R.id.event_name);
             state = (TextView) v.findViewById(R.id.event_state);
             image = (ImageView) v.findViewById(R.id.imageView);
+            event_date_check = (ImageView) v.findViewById(R.id.event_date_check);
+            event_date_check.setVisibility(View.INVISIBLE);
             container = v.findViewById(R.id.list_item_layout);
 
             // by this we are just registering the click Event on the whole view i.e. view in our case

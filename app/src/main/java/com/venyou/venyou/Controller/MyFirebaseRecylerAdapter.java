@@ -13,6 +13,8 @@ import com.venyou.venyou.Model.Event;
 
 import c.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +47,15 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         String name = (String) event.getName();
         String state = (String) event.getState();
         String url = (String) event.getImage();
+        String eventdate = (String) event.getDate();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Calendar c = Calendar.getInstance();
+        String currentDate = df.format(c.getTime());
+        if (currentDate.compareTo(eventdate) > 0) {
+            viewHolder.event_date_check.setVisibility(View.VISIBLE);
+        }
+
         viewHolder.bundle.putString("name",name);
         viewHolder.name.setText(name);
         viewHolder.state.setText("State :"+ state);
@@ -70,6 +81,7 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         public TextView name;
         public TextView state;
         public ImageView image;
+        public ImageView event_date_check;
         private View container;
         private Bundle bundle = new Bundle();
         public EventViewHolder(View v) {
@@ -77,6 +89,8 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
             name = (TextView) v.findViewById(R.id.event_name);
             state = (TextView) v.findViewById(R.id.event_state);
             image = (ImageView) v.findViewById(R.id.imageView);
+            event_date_check = (ImageView) v.findViewById(R.id.event_date_check);
+            event_date_check.setVisibility(View.INVISIBLE);
             container = v.findViewById(R.id.list_item_layout);
 
             // by this we are just registering the click Event on the whole view i.e. view in our case

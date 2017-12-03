@@ -3,9 +3,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/AppTheme.NoActionBar"
-    android:background="#fcfcfc"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#fcfcfc">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/list_item_layout"
             android:layout_width="match_parent"
             android:layout_height="145dp"
-            android:background="#012f68"
+            android:background="#017c71"
             android:clickable="true"
             android:gravity="center"
             android:orientation="horizontal"
@@ -31,30 +31,39 @@
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageView"
                     android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView"/>
+                    android:layout_height="match_parent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
                     android:paddingLeft="10dp">
 
-                <TextView
-                    android:id="@+id/event_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:paddingTop="40dp"
-                    android:paddingLeft="10dp"
-                    android:fontFamily="sans-serif-black"
-                    android:textColor="#fafafa"
-                    android:textSize="30dp"
-                    android:singleLine="true"
-                    android:text="Anything here"
-                    android:textStyle="italic" />
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="end"
+                        android:id="@+id/event_date_check"
+                        android:src="@drawable/event_check" />
+
+                    <TextView
+                        android:id="@+id/event_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-black"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:singleLine="true"
+                        android:text="Anything here"
+                        android:textColor="#fafafa"
+                        android:textSize="30dp"
+                        android:textStyle="italic" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -64,20 +73,23 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/location"/>
+                            android:src="@drawable/location" />
 
-                    <TextView
-                        android:id="@+id/event_state"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="sans-serif-thin"
-                        android:textColor="#fafafa"
-                        android:textSize="20dp"
-                        android:padding="5dp"
-                        android:singleLine="true"
-                        android:text="Anything here"
-                        android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/event_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif-thin"
+                            android:padding="5dp"
+                            android:singleLine="true"
+                            android:text="Anything here"
+                            android:textColor="#fafafa"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+
                     </LinearLayout>
                 </LinearLayout>
 

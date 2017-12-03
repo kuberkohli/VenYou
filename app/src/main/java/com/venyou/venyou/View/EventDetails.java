@@ -20,7 +20,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 //import com.venyou.venyou.R;
 import c.R;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class EventDetails extends AppCompatActivity {
 
@@ -30,7 +37,7 @@ public class EventDetails extends AppCompatActivity {
     private float rating;
     private DatabaseReference mRef;
     private HashMap<String, ?> eventDetails;
-    private Button button, makePayment;
+    private Button button, makePayment, photoBoxButton;
     private HashMap<String, ?> register_check;
     String host_rating;
 
@@ -53,6 +60,8 @@ public class EventDetails extends AppCompatActivity {
         time = (TextView) findViewById(R.id.event_time);
         image = (ImageView) findViewById(R.id.event_image);
         button = (Button) findViewById(R.id.register_event);
+        photoBoxButton = (Button) findViewById(R.id.photoBox);
+        photoBoxButton.setVisibility(View.INVISIBLE);
         makePayment = (Button) findViewById(R.id.paypal);
         ratingBar = (RatingBar) findViewById(R.id.host_ratings);
 
@@ -69,6 +78,17 @@ public class EventDetails extends AppCompatActivity {
 //                        String str = event.get(event_name);
                         if(event.get(event_name) != null){
                             button.setText("Unregister");
+                            Calendar c = Calendar.getInstance();
+
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            String currentDate = df.format(c.getTime());
+                            String eventdate = (String) eventDetails.get("date");
+
+                            if (currentDate.compareTo(eventdate) > 0) {
+                                button.setVisibility(View.INVISIBLE);
+                                makePayment.setVisibility(View.INVISIBLE);
+                                photoBoxButton.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                 }
@@ -111,9 +131,6 @@ public class EventDetails extends AppCompatActivity {
                     button.setText("Unregister");
                     mRef.updateChildren(map);
                 }
-
-
-
             }
         });
         makePayment.setOnClickListener(new View.OnClickListener() {

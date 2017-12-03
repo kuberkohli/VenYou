@@ -30,7 +30,8 @@
             android:id="@+id/list_item_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_above="@+id/register_event"
+            android:layout_alignParentStart="true"
             android:background="#f7f9f9"
             android:clickable="true"
             android:gravity="center_vertical|center"
@@ -180,7 +181,6 @@
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-thin"
                 android:gravity="center"
-                android:paddingBottom="10dp"
                 android:paddingLeft="8dp"
                 android:singleLine="true"
                 android:text="Anything here"
@@ -208,4 +208,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:text="Register" />
+
+    <Button
+        android:id="@+id/photoBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:text="PhotoBox" />
 </RelativeLayout>
