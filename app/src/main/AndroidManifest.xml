@@ -47,7 +47,8 @@
             android:label="@string/title_activity_my_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.venyou.venyou.View.ChatActivity" />
-        <activity android:name="com.venyou.venyou.View.PaypalActivity"></activity>
+        <activity android:name="com.venyou.venyou.View.PaypalActivity" />
+        <activity android:name="com.venyou.venyou.View.Gallery"></activity>
     </application>
 
 </manifest>
