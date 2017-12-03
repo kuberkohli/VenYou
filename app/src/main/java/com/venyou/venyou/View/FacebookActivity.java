@@ -25,8 +25,8 @@ import com.facebook.login.widget.ProfilePictureView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.venyou.venyou.R;
+import c.R;
+//import com.venyou.venyou.R;
 
 public class FacebookActivity extends AppCompatActivity {
 

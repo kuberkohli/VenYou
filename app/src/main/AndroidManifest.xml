@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.venyou.venyou">
+    package="c">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".View.Home"
+            android:name="com.venyou.venyou.View.Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -24,7 +24,7 @@
             tools:replace="android:value" />
 
         <activity
-            android:name=".View.FacebookActivity"
+            android:name="com.venyou.venyou.View.LoginActivity"
             android:label="Login"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -34,12 +34,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.EventDetails"
+            android:name="com.venyou.venyou.View.EventDetails"
             android:label="@string/title_activity_event_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".View.AddEvent"
+            android:name="com.venyou.venyou.View.AddEvent"
             android:label="@string/title_activity_add_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.venyou.venyou.View.MyProfile"
+            android:label="@string/title_activity_my_profile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

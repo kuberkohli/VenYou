@@ -25,12 +25,18 @@ import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 import com.venyou.venyou.Model.EventData;
-import com.venyou.venyou.R;
+import c.R;
 import com.venyou.venyou.View.FacebookActivity;
 
 import java.util.HashMap;
@@ -40,7 +46,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private ImageView propic;
-    String name;
+    String uname,uid,url,uemail;
+    private DatabaseReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,15 +78,66 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        name = getIntent().getExtras().getString("name");
+
+        uname = getIntent().getExtras().getString("name");
+        uemail = getIntent().getExtras().getString("email");
+        uid = getIntent().getExtras().getString("id");
         View view = (View)navigationView.getHeaderView(0);
         TextView textView_name = (TextView) view.findViewById(R.id.textView_name);
-        textView_name.setText(name);
+        textView_name.setText(uname);
         propic = (ImageView) view.findViewById(R.id.imageView);
 
-        Picasso.with(getApplicationContext())
-                .load(getIntent().getExtras().getString("url"))
-                .into(propic);
+        FloatingActionButton chat = (FloatingActionButton) findViewById(R.id.chat_fbutton);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        FloatingActionButton addEvent = (FloatingActionButton) findViewById(R.id.addEvent_fbutton);
+        addEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home.this,AddEvent.class);
+                intent.putExtra("name",uname);
+                intent.putExtra("id",uid);
+                intent.putExtra("email",uemail);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uname = getIntent().getExtras().getString("name");
+        uemail = getIntent().getExtras().getString("email");
+        uid = getIntent().getExtras().getString("id");
+        mRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).getRef();
+        mRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HashMap<String,String> event = (HashMap<String,String>)dataSnapshot.getValue();
+                url = event.get("pic");
+                if(url!= null){
+                    Picasso.with(getApplicationContext())
+                            .load(url)
+                            .into(propic);
+                }else{
+                    url="https://firebasestorage.googleapis.com/v0/b/venyou-1ca06.appspot.com/o/users%2Favatar-1577909_960_720.png?alt=media&token=aac627f0-8fce-4ae2-91c4-87b7eaf5b852";
+                    Picasso.with(getApplicationContext())
+                            .load(url)
+                            .into(propic);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -104,12 +162,19 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.profile) {
+            Intent intent = new Intent(getApplicationContext(), MyProfile.class);
+            intent.putExtra("name",uname);
+            intent.putExtra("id",uid);
+            intent.putExtra("url",url);
+            intent.putExtra("email",uemail);
+            startActivity(intent);
         } else if (id == R.id.logout) {
-            LoginManager.getInstance().logOut();
-            Intent intent = new Intent(this,FacebookActivity.class); startActivity(intent);
+//            LoginManager.getInstance().logOut();
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this,LoginActivity.class); startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -134,8 +199,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         if (id == R.id.action_settings) {
             return true;
         }else if (id == R.id.action_logout){
-            LoginManager.getInstance().logOut();
-            Intent intent = new Intent(this,FacebookActivity.class); startActivity(intent);
+//            LoginManager.getInstance().logOut();
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this,LoginActivity.class); startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -145,6 +211,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     public void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name) {
         Intent intent = new Intent(getApplicationContext(), EventDetails.class);
         intent.putExtra("eventData", eventDetails);
+        intent.putExtra("name",uname);
+        intent.putExtra("id",uid);
+        intent.putExtra("email",uemail);
         startActivity(intent);
     }
 
@@ -209,7 +278,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 case 1:
                     return PlaceholderFragment.newInstance(position + 1);
                 case 2:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return Attending_fragment.newInstance(uid);
             }
             return PlaceholderFragment.newInstance(1);
         }
