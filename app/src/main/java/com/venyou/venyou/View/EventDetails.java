@@ -57,7 +57,7 @@ public class EventDetails extends AppCompatActivity {
         state = (TextView) findViewById(R.id.event_state);
         venue = (TextView) findViewById(R.id.event_venue);
         date = (TextView) findViewById(R.id.event_date);
-        time = (TextView) findViewById(R.id.event_time);
+//        time = (TextView) findViewById(R.id.event_time);
         image = (ImageView) findViewById(R.id.event_image);
         button = (Button) findViewById(R.id.register_event);
         photoBoxButton = (Button) findViewById(R.id.photoBox);
@@ -102,7 +102,7 @@ public class EventDetails extends AppCompatActivity {
 
         name.setText((String) eventDetails.get("name"));
         date.setText("Date : " + (String) eventDetails.get("date"));
-        time.setText("Time : " + (String) eventDetails.get("time"));
+//        time.setText("Time : " + (String) eventDetails.get("time"));
         city.setText("City : " + (String) eventDetails.get("city"));
         state.setText("State : " + (String) eventDetails.get("state"));
         venue.setText("Venue : " + (String) eventDetails.get("venue"));
