@@ -32,7 +32,7 @@ import java.util.Locale;
 public class EventDetails extends AppCompatActivity {
 
     private TextView name, venue ,city, state, street, description, fee, host, date, time;
-    private ImageView image;
+    private ImageView image,coverpic;
     private RatingBar ratingBar;
     private float rating;
     private DatabaseReference mRef;
@@ -58,7 +58,8 @@ public class EventDetails extends AppCompatActivity {
         venue = (TextView) findViewById(R.id.event_venue);
         date = (TextView) findViewById(R.id.event_date);
 //        time = (TextView) findViewById(R.id.event_time);
-        image = (ImageView) findViewById(R.id.event_image);
+//        image = (ImageView) findViewById(R.id.event_image);
+        coverpic = (ImageView) findViewById(R.id.event_coverpic);
         button = (Button) findViewById(R.id.register_event);
         photoBoxButton = (Button) findViewById(R.id.photoBox);
         photoBoxButton.setVisibility(View.INVISIBLE);
@@ -114,8 +115,8 @@ public class EventDetails extends AppCompatActivity {
         host_rating = (String) eventDetails.get("host_rating");
         rating = Float.parseFloat(host_rating);
         ratingBar.setRating(rating);
-        Picasso.with(getApplicationContext()).load((String) eventDetails.get("image")).into(image);
-
+//        Picasso.with(getApplicationContext()).load((String) eventDetails.get("image")).into(image);
+        Picasso.with(getApplicationContext()).load((String) eventDetails.get("image")).into(coverpic);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

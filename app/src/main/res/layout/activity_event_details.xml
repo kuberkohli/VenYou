@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/paypal"
-        android:layout_marginTop="55dp">
+        android:layout_marginTop="10dp">
 
         <LinearLayout
             android:id="@+id/list_item_layout"
@@ -36,12 +36,25 @@
             android:clickable="true"
             android:gravity="center_vertical|center"
             android:orientation="vertical"
-            android:paddingLeft="6dp">
+            android:paddingLeft="0dp">
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
 
-            <ImageView
-                android:id="@+id/event_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/event_coverpic"
+                    android:alpha="1"/>
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/event_image"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_width="250dp"-->
+                    <!--android:layout_height="250dp" />-->
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/event_name"
