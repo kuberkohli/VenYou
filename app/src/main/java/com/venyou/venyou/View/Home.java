@@ -210,11 +210,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name) {
         Intent intent = new Intent(getApplicationContext(), EventDetails.class);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(Home.this,view ,"ActivityTransition" );
         intent.putExtra("eventData", eventDetails);
         intent.putExtra("name",uname);
         intent.putExtra("id",uid);
         intent.putExtra("email",uemail);
-        startActivity(intent);
+//        startActivity(intent);
+         Home.this.startActivity(intent, options.toBundle());
     }
 
     @Override
