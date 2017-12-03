@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "145872751709",
+    "firebase_url": "https://venyou-1ca06.firebaseio.com",
+    "project_id": "venyou-1ca06",
+    "storage_bucket": "venyou-1ca06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145872751709:android:b517d922266d1c5b",
+        "android_client_info": {
+          "package_name": "com.venyou.venyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145872751709-cls7rgdqqfc1500sk59s81k1720uobel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.venyou.venyou",
+            "certificate_hash": "0a6f1de20f32d25bf1620bea60e9145491e41fc1"
+          }
+        },
+        {
+          "client_id": "145872751709-mu1ppk8r2mn0cc173tnpftj31br2j3mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAkJReXTZ6dTxt-lHnKuIclhCnhBNfqbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145872751709-mu1ppk8r2mn0cc173tnpftj31br2j3mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

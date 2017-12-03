@@ -1,0 +1,58 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.venyou.venyou"
+        minSdkVersion 24
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    implementation 'com.google.firebase:firebase-database:11.0.4'
+    implementation 'com.firebaseui:firebase-ui:2.2.0'
+    compile('com.facebook.android:facebook-android-sdk:4.25.0')
+    implementation 'com.google.firebase:firebase-auth:11.0.4'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.google.firebase:firebase-storage:11.0.4'
+
+
+    annotationProcessor 'ai.api:libai:1.4.8'
+    implementation 'ai.api:libai:1.4.8'
+    annotationProcessor 'ai.api:sdk:2.0.5@aar'
+    implementation 'ai.api:sdk:2.0.5@aar'
+    // api.ai SDK dependencies
+    annotationProcessor 'com.google.code.gson:gson:2.3'
+    implementation 'com.google.code.gson:gson:2.3'
+    annotationProcessor 'commons-io:commons-io:2.4'
+    implementation 'commons-io:commons-io:2.4'
+    implementation('com.paypal.sdk:paypal-android-sdk:2.15.3') {
+        exclude group: 'io.card'
+    }
+}
+
+apply plugin: 'com.google.gms.google-services'
+//implementation 'com.facebook.android:facebook-login:[4,5)'
