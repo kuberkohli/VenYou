@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.venyou.venyou"
-        minSdkVersion 25
+        minSdkVersion 24
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -38,6 +38,20 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'com.google.firebase:firebase-storage:11.0.4'
+
+
+    annotationProcessor 'ai.api:libai:1.4.8'
+    compile 'ai.api:libai:1.4.8'
+    annotationProcessor 'ai.api:sdk:2.0.5@aar'
+    compile 'ai.api:sdk:2.0.5@aar'
+    // api.ai SDK dependencies
+    annotationProcessor 'com.google.code.gson:gson:2.3'
+    compile 'com.google.code.gson:gson:2.3'
+    annotationProcessor 'commons-io:commons-io:2.4'
+    compile 'commons-io:commons-io:2.4'
+    compile('com.paypal.sdk:paypal-android-sdk:2.15.3') {
+        exclude group: 'io.card'
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
