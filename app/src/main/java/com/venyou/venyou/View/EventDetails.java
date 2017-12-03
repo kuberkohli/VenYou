@@ -30,7 +30,8 @@ public class EventDetails extends AppCompatActivity {
     private DatabaseReference mRef;
     private HashMap<String, ?> eventDetails;
     private Button button;
-    private String register_check, host_rating;
+    private HashMap<String, ?> register_check;
+    String host_rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +64,8 @@ public class EventDetails extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     HashMap<String,String> event = (HashMap<String,String>)dataSnapshot.getValue();
                     if(event!=null){
-                        register_check = event.get(event_name);
-                        if(register_check!= null && register_check.equals("true")){
+//                        String str = event.get(event_name);
+                        if(event.get(event_name) != null){
                             button.setText("Unregister");
                         }
                     }
@@ -103,7 +104,7 @@ public class EventDetails extends AppCompatActivity {
                     mRef.child(event_name).removeValue();
                 }
                 else if(check.equals("Register")){
-                    map.put(event_name,"true");
+                    map.put(event_name,eventDetails);
                     button.setText("Unregister");
                     mRef.updateChildren(map);
                 }

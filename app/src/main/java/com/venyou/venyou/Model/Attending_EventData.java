@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 import com.venyou.venyou.Controller.Attending_FirebaseRecylerAdapter;
 import com.venyou.venyou.Controller.MyFirebaseRecylerAdapter;
 
@@ -50,7 +51,7 @@ public class Attending_EventData implements Serializable{
     public HashMap getItem(String s){
         for(int i=0;i<eventlist.size();i++){
             HashMap event = (HashMap)eventlist.get(i);
-            String name = (String)event.get("Name");
+            String name = (String)event.get("name");
             if (name.equals(s)){
                 return event;
                 }
@@ -76,27 +77,12 @@ public class Attending_EventData implements Serializable{
     }
 
     public void onItemAddedToCloud(final HashMap item){
-        final int insertPosition = 0;
-        final String id= item.get("id").toString();
-        eRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, String> eve = (HashMap<String, String>) dataSnapshot.getValue();
-                check = eve.get(id);
-                if (check != null) {
-                    for(int i=0;i<eventlist.size();i++){
-                        HashMap event = (HashMap)eventlist.get(i);
-                        String mid = (String)event.get("id");
-                    }
-                    eventlist.add(item);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        final int insertPosition = 0;
+//        final String id= item.get("id").toString();
+//        for(int i=0;i<eventlist.size();i++){
+//            HashMap event = (HashMap)eventlist.get(i);
+//        }
+        eventlist.add(item);
 
     }
 
@@ -153,8 +139,8 @@ public class Attending_EventData implements Serializable{
 
     public Attending_EventData(String uid){
         eventlist = new ArrayList<Map<String,?>>();
-        eRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
-        mRef = FirebaseDatabase.getInstance().getReference().child("events").getRef();
+//        eRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
+        mRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
         myFirebaseRecylerAdapter = null;
         mContext = null;
     }

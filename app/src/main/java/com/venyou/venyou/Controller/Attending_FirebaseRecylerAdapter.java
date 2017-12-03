@@ -1,5 +1,5 @@
 package com.venyou.venyou.Controller; //change the package name to your project's package name
-
+// change this
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -49,37 +49,22 @@ public class Attending_FirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Ev
         final String name = (String) event.getName();
         final String state = (String) event.getState();
         final String url = (String) event.getImage();
-        eRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                HashMap<String, String> eve = (HashMap<String, String>) dataSnapshot.getValue();
-                String check = eve.get(name);
-                if (check != null) {
-                    viewHolder.bundle.putString("name",name);
-                    viewHolder.name.setText(name);
-                    viewHolder.state.setText("State :"+ state);
-                    Picasso.with(mContext).load(url).into(viewHolder.image);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        viewHolder.bundle.putString("name",name);
+        viewHolder.name.setText(name);
+        viewHolder.state.setText("State :"+ state);
+        Picasso.with(mContext).load(url).into(viewHolder.image);
     }
 
+//
+//    @Override
+//    public long getItemId(int position) {
+//        return position;
+//    }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public Event getItem(int position) {
-        return super.getItem(position);
-    }
+//    @Override
+//    public Event getItem(int position) {
+//        return super.getItem(position);
+//    }
 
 
 

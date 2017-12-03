@@ -45,12 +45,11 @@ public class Attending_fragment extends android.support.v4.app.Fragment {
         return fragment;
     }
 
-    public interface InterfaceEventData{
-        void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name);
-        void onClickAddEvent();
+    public interface InterfaceAttendEventData{
+        void DisplayAttendEventData(int position, HashMap<String, ?> eventDetails, View view, String name);
     }
 
-    InterfaceEventData interfaceEventData;
+    InterfaceAttendEventData interfaceAttendEventData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,9 @@ public class Attending_fragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
 
         final View view = inflater.inflate(R.layout.attending_fragment, container, false);
-        childRef =  FirebaseDatabase.getInstance().getReference().child("event_app").getRef();
+        childRef =  FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
 
-//        interfaceEventData = (InterfaceEventData) view.getContext();
+        interfaceAttendEventData = (InterfaceAttendEventData) view.getContext();
         myFirebaseRecylerAdapter = new Attending_FirebaseRecylerAdapter(Event.class, R.layout.home_fragment_cardview,
                 Attending_FirebaseRecylerAdapter.EventViewHolder.class, childRef, getContext(),uid);
 
@@ -91,29 +90,13 @@ public class Attending_fragment extends android.support.v4.app.Fragment {
                 normalClick(position, eventDetails, view,name);
             }
         });
-        FloatingActionButton chat = (FloatingActionButton) view.findViewById(R.id.chat_button);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        FloatingActionButton addEvent = (FloatingActionButton) view.findViewById(R.id.addEvent_button);
-        addEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                interfaceEventData.onClickAddEvent();
-            }
-        });
 
         return view;
 
     }
 
     public void normalClick(int pos, HashMap<String, ?> eventDetails, View view, String name){
-//        interfaceEventData.DisplayEventData(pos, eventDetails, view, name);
+        interfaceAttendEventData.DisplayAttendEventData(pos, eventDetails, view, name);
     }
 
     @Override
