@@ -1,5 +1,6 @@
 package com.venyou.venyou.View;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.Group;
 import android.support.design.widget.FloatingActionButton;
@@ -29,7 +30,7 @@ public class EventDetails extends AppCompatActivity {
     private float rating;
     private DatabaseReference mRef;
     private HashMap<String, ?> eventDetails;
-    private Button button;
+    private Button button, makePayment;
     private HashMap<String, ?> register_check;
     String host_rating;
 
@@ -52,6 +53,7 @@ public class EventDetails extends AppCompatActivity {
         time = (TextView) findViewById(R.id.event_time);
         image = (ImageView) findViewById(R.id.event_image);
         button = (Button) findViewById(R.id.register_event);
+        makePayment = (Button) findViewById(R.id.paypal);
         ratingBar = (RatingBar) findViewById(R.id.host_ratings);
 
         eventDetails = (HashMap<String, ?>) getIntent().getSerializableExtra("eventData");
@@ -87,6 +89,7 @@ public class EventDetails extends AppCompatActivity {
         street.setText("Street : " + (String) eventDetails.get("street"));
         fee.setText("Fee : " + (String) eventDetails.get("fee") + "$");
         description.setText((String) eventDetails.get("description"));
+        makePayment.setText("Pay : " + (String) eventDetails.get("fee") + "$");
         host.setText("Host : " + (String) eventDetails.get("host_name"));
         host_rating = (String) eventDetails.get("host_rating");
         rating = Float.parseFloat(host_rating);
@@ -113,5 +116,13 @@ public class EventDetails extends AppCompatActivity {
 
             }
         });
+        makePayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(EventDetails.this, PaypalActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

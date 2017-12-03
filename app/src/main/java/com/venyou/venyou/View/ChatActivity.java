@@ -1,5 +1,4 @@
 package com.venyou.venyou.View;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,24 +7,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+//import com.venyou.venyou.R;
+import c.R;
+
 import java.lang.ref.WeakReference;
 
 import ai.api.AIListener;
 import ai.api.AIServiceException;
+import ai.api.android.AIDataService;
 import ai.api.android.AIService;
 import ai.api.model.AIError;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import ai.api.ui.AIDialog;
-import c.R;
 
 public class ChatActivity extends AppCompatActivity implements AIListener, AIDialog.AIDialogListener{
 
     private Button listenButton;
     private TextView resultTextView;
     private AIService aiService;
-    private ai.api.android.AIDataService aiDataService;
+    private AIDataService aiDataService;
     private EditText Etext;
 
     @Override
@@ -42,7 +44,7 @@ public class ChatActivity extends AppCompatActivity implements AIListener, AIDia
                 ai.api.android.AIConfiguration.RecognitionEngine.System);
 
         // Use with text search
-        aiDataService = new ai.api.android.AIDataService(this, config);
+        aiDataService = new AIDataService(this, config);
         // Use with Voice input
         aiService = AIService.getService(this, config);
         aiService.setListener(this);
@@ -53,33 +55,6 @@ public class ChatActivity extends AppCompatActivity implements AIListener, AIDia
         if(aiRequest==null) {
             throw new IllegalArgumentException("aiRequest must be not null");
         }
-
-//        final AsyncTask<AIRequest, Integer, AIResponse> task =
-//                new AsyncTask<AIRequest, Integer, AIResponse>() {
-//                    private AIError aiError;
-//
-//                    @Override
-//                    protected AIResponse doInBackground(final AIRequest... params) {
-//                        final AIRequest request = params[0];
-//                        try {
-//                            final AIResponse response =    aiDataService.request(request);
-//                            // Return response
-//                            return response;
-//                        } catch (final AIServiceException e) {
-//                            aiError = new AIError(e);
-//                            return null;
-//                        }
-//                    }
-//
-//                    @Override
-//                    protected void onPostExecute(final AIResponse response) {
-//                        if (response != null) {
-//                            onResult(response);
-//                        } else {
-//                            onError(aiError);
-//                        }
-//                    }
-//                };
 
         listenButton.setOnClickListener(new View.OnClickListener() {
             @Override

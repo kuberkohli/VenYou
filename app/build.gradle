@@ -41,15 +41,15 @@ dependencies {
 
 
     annotationProcessor 'ai.api:libai:1.4.8'
-    compile 'ai.api:libai:1.4.8'
+    implementation 'ai.api:libai:1.4.8'
     annotationProcessor 'ai.api:sdk:2.0.5@aar'
-    compile 'ai.api:sdk:2.0.5@aar'
+    implementation 'ai.api:sdk:2.0.5@aar'
     // api.ai SDK dependencies
     annotationProcessor 'com.google.code.gson:gson:2.3'
-    compile 'com.google.code.gson:gson:2.3'
+    implementation 'com.google.code.gson:gson:2.3'
     annotationProcessor 'commons-io:commons-io:2.4'
-    compile 'commons-io:commons-io:2.4'
-    compile('com.paypal.sdk:paypal-android-sdk:2.15.3') {
+    implementation 'commons-io:commons-io:2.4'
+    implementation('com.paypal.sdk:paypal-android-sdk:2.15.3') {
         exclude group: 'io.card'
     }
 }
