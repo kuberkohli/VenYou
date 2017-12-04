@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="ActivityTransition"
+    android:background="#c1ecec"
     tools:context="com.venyou.venyou.View.EventDetails">
 
     <android.support.design.widget.AppBarLayout
@@ -25,7 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/paypal"
-        android:layout_marginTop="10dp">
+
+        >
 
         <LinearLayout
             android:id="@+id/list_item_layout"
@@ -33,21 +34,22 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/register_event"
             android:layout_alignParentStart="true"
-            android:background="#f7f9f9"
+            android:background="#c1ecec"
             android:clickable="true"
             android:gravity="center_vertical|center"
             android:orientation="vertical"
             android:paddingLeft="0dp">
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp">
 
                 <ImageView
+                    android:id="@+id/event_coverpic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/event_coverpic"
-                    android:alpha="1"/>
+                    android:layout_alignParentTop="true"
+                    android:alpha="1" />
 
                 <!--<ImageView-->
                     <!--android:id="@+id/event_image"-->
@@ -82,6 +84,7 @@
                 android:textColor="#030303"
                 android:textSize="30dp"
                 android:textStyle="bold" />
+
 
             <RatingBar
                 android:id="@+id/host_ratings"
@@ -214,6 +217,15 @@
         android:layout_above="@+id/register_event"
         android:layout_alignParentStart="true"
         android:text="Pay - $2" />
+
+
+    <Button
+        android:id="@+id/commentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/register_event"
+        android:layout_alignParentStart="true"
+        android:text="Comment " />
 
     <Button
         android:id="@+id/register_event"

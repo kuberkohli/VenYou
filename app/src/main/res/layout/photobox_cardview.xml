@@ -17,11 +17,11 @@
             android:id="@+id/list_item_layout"
             android:layout_width="match_parent"
             android:layout_height="145dp"
-            android:background="@color/colorYellow"
             android:clickable="true"
             android:gravity="center"
+            android:background="#000"
             android:orientation="horizontal"
-            android:paddingLeft="6dp">
+            android:paddingLeft="0dp">
             <!--blue = 011d40-->
             <LinearLayout
                 android:id="@+id/list_item_inner_layout"

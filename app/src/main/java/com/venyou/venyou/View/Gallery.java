@@ -24,11 +24,28 @@ public class Gallery extends AppCompatActivity implements Gallery_fragment.OnFra
                 .commit();
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        FragmentManager manager = getSupportFragmentManager();
+//        if (manager.getBackStackEntryCount() > 1) {
+//            manager.popBackStack();
+//        } else {
+//            // if there is only one entry in the backstack, show the home screen
+//            moveTaskToBack(true);
+//            finish();
+//        }
+//    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 //        Intent intent = new Intent(getApplicationContext(), ImageDetails.class);
 //        intent.putExtra("url", name);
 //        startActivity(intent);
+    }
+
+    @Override
+    public void onGalleryInteraction(Uri uri) {
+
     }
 
     @Override

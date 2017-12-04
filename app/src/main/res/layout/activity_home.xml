@@ -14,6 +14,7 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#c1ecec"
         tools:context="com.venyou.venyou.View.Home">
 
         <android.support.design.widget.AppBarLayout
@@ -40,19 +41,19 @@
                     android:id="@+id/tabItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Recommendation" />
+                    android:text="Event List" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upcoming Event" />
+                    android:text="Attended Events" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Attending" />
+                    android:text="Live Chat" />
 
             </android.support.design.widget.TabLayout>
         </android.support.design.widget.AppBarLayout>

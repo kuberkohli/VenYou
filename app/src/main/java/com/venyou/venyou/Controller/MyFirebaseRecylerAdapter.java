@@ -6,17 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 import com.venyou.venyou.Model.Event;
 
-import c.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
+
+import c.R;
 
 public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyFirebaseRecylerAdapter.EventViewHolder> {
 
