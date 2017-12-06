@@ -9,7 +9,7 @@ import c.R;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsFragment.OnFragmentInteractionListener, CommentDetailsFragment.OnDetailInteractionListener{
 
-    private String eventName;
+    private String eventName, uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +17,10 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
         setContentView(R.layout.activity_comments);
         if (getIntent().getExtras() != null) {
             eventName = getIntent().getExtras().getString("name");
-        } else {
-            eventName = "Adele Concert";
+            uname = getIntent().getExtras().getString("uname");
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.comment_container, CommentsFragment.newInstance(eventName, ""))
+                .replace(R.id.comment_container, CommentsFragment.newInstance(eventName, uname))
                 .commit();
     }
 

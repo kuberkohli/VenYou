@@ -3,6 +3,7 @@ package com.venyou.venyou.View;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -146,7 +148,9 @@ public class CommentsFragment extends Fragment {
                     final String userid = mauth.getCurrentUser().getUid();
                     final DatabaseReference userdb = ref.child(eventName).child(String.valueOf(Integer.MAX_VALUE - timestamp.getTime() % 1000000000));
                     userdb.child("id").setValue(String.valueOf(Integer.MAX_VALUE - timestamp.getTime() % 1000000000));
-                    userdb.child("url").setValue(String.valueOf(editText.getText()));
+                    userdb.child("url").setValue(mParam2 + ": " +String.valueOf(editText.getText()));
+                }else{
+                    Snackbar.make(getView(),"Kindly enter a comment in the text field.",Snackbar.LENGTH_SHORT).show();
                 }
                 editText.setText("");
             }

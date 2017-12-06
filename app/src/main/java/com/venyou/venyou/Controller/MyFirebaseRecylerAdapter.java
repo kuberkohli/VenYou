@@ -53,6 +53,8 @@ public class MyFirebaseRecylerAdapter extends FirebaseRecyclerAdapter<Event, MyF
         String currentDate = df.format(c.getTime());
         if (currentDate.compareTo(eventdate) > 0) {
             viewHolder.event_date_check.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.event_date_check.setVisibility(View.INVISIBLE);
         }
 
         viewHolder.bundle.putString("name",name);

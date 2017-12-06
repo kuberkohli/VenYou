@@ -34,7 +34,7 @@ public class EventDetails extends AppCompatActivity {
     private HashMap<String, ?> eventDetails;
     private Button button, makePayment, photoBoxButton, commentButton;
     private HashMap<String, ?> register_check;
-    String host_rating;
+    String host_rating, uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class EventDetails extends AppCompatActivity {
         setContentView(R.layout.activity_event_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        uname = getIntent().getExtras().get("name").toString();
         name = (TextView) findViewById(R.id.event_name);
         city = (TextView) findViewById(R.id.event_city);
         street = (TextView) findViewById(R.id.event_street);
@@ -64,6 +64,18 @@ public class EventDetails extends AppCompatActivity {
         commentButton.setVisibility(View.INVISIBLE);
 
         eventDetails = (HashMap<String, ?>) getIntent().getSerializableExtra("eventData");
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String currentDate = df.format(c.getTime());
+        String eventdate = (String) eventDetails.get("date");
+
+        if (currentDate.compareTo(eventdate) > 0) {
+            button.setVisibility(View.INVISIBLE);
+            makePayment.setVisibility(View.INVISIBLE);
+            photoBoxButton.setVisibility(View.INVISIBLE);
+            commentButton.setVisibility(View.INVISIBLE);
+        }
+
         final String event_name = (String) eventDetails.get("name");
         String uid = (String) getIntent().getExtras().get("id");
         mRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
@@ -77,7 +89,6 @@ public class EventDetails extends AppCompatActivity {
                         if(event.get(event_name) != null){
                             button.setText("Unregister");
                             Calendar c = Calendar.getInstance();
-
                             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                             String currentDate = df.format(c.getTime());
                             String eventdate = (String) eventDetails.get("date");
@@ -155,6 +166,7 @@ public class EventDetails extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EventDetails.this, CommentsActivity.class);
                 intent.putExtra("name",(String) eventDetails.get("name"));
+                intent.putExtra("uname", uname);
                 startActivity(intent);
             }
         });

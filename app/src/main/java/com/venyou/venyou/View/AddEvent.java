@@ -57,6 +57,8 @@ public class AddEvent extends AppCompatActivity {
     private Uri imageUri;
     public static String event_time, event_date;
     Map<String,String> event = new HashMap<>();
+    final static long today = System.currentTimeMillis() - 1000;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +130,9 @@ public class AddEvent extends AppCompatActivity {
             event.put("host_rating", "4");
             String date = event_date+" "+event_time;
             if(event_time != null) event.put("time",event_time);
+            else event.put("time","08:00");
             if(event_date != null) event.put("date",date);
+            else event.put("date","2018-01-01 08:00");
 
             FirebaseStorage storage = FirebaseStorage.getInstance("gs://venyou-1ca06.appspot.com/");
 
@@ -204,6 +208,12 @@ public class AddEvent extends AppCompatActivity {
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
+        private DatePickerDialog.OnDateSetListener listener;
+
+        public void setListener(DatePickerDialog.OnDateSetListener listener) {
+            this.listener = listener;
+        }
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current date as the default date in the picker
@@ -213,13 +223,15 @@ public class AddEvent extends AppCompatActivity {
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(getContext(), listener, year, month, day);
+            dialog.getDatePicker().setMinDate(System.currentTimeMillis() -1000);
+            return dialog;
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            month = month+1;
-            event_date = Integer.toString(year) + "-" +Integer.toString(month) + "-" + Integer.toString(day);
+                //success
+                month = month+1;
+                event_date = Integer.toString(year) + "-" +Integer.toString(month) + "-" + Integer.toString(day);
         }
     }
 }

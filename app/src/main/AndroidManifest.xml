@@ -25,6 +25,7 @@
         <activity
             android:name="com.venyou.venyou.View.Home"
             android:label="@string/title_activity_home"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -34,7 +35,8 @@
 
         <activity
             android:name="com.venyou.venyou.View.LoginActivity"
-            android:label="Login"
+            android:label="VenYou"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,7 +56,8 @@
             android:name="com.venyou.venyou.View.MyProfile"
             android:label="@string/title_activity_my_profile"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.venyou.venyou.View.ChatActivity" />
+        <activity android:name="com.venyou.venyou.View.ChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name="com.venyou.venyou.View.PaypalActivity" />
         <activity android:name="com.venyou.venyou.View.Gallery" />
         <activity android:name="com.venyou.venyou.View.CommentsActivity"></activity>

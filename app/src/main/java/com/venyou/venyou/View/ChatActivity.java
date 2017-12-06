@@ -1,8 +1,10 @@
 package com.venyou.venyou.View;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +53,6 @@ public class ChatActivity extends AppCompatActivity implements AIListener, AIDia
 
         final AIRequest aiRequest = new AIRequest();
 
-
         if(aiRequest==null) {
             throw new IllegalArgumentException("aiRequest must be not null");
         }
@@ -59,11 +60,15 @@ public class ChatActivity extends AppCompatActivity implements AIListener, AIDia
         listenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(String.valueOf(Etext.getText())!= ""){
+                String str = Etext.getText().toString();
+                if(!str.equals("")){
                     aiRequest.setQuery(String.valueOf(Etext.getText()));
+                    MyTask task = new MyTask(ChatActivity.this);
+                    task.execute(aiRequest);
+                }else{
+                    Snackbar.make(getCurrentFocus(),"Kindly enter a comment in the text field.",Snackbar.LENGTH_SHORT).show();
                 }
-                MyTask task = new MyTask(ChatActivity.this);
-                task.execute(aiRequest);
+                Etext.setText("");
             }
         });
     }

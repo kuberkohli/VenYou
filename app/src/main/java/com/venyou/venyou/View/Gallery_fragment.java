@@ -174,6 +174,8 @@ public class Gallery_fragment extends Fragment {
 
                         }
                     });
+                }else{
+                    Toast.makeText(getContext(),"Please choose an image to upload.",Toast.LENGTH_SHORT).show();
                 }
             }
         });

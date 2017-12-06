@@ -144,10 +144,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        }else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
         }
-//        else {
-//            super.onBackPressed();
-//        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -196,7 +197,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(getApplicationContext(), MyProfile.class);
+            intent.putExtra("name",uname);
+            intent.putExtra("id",uid);
+            intent.putExtra("url",url);
+            intent.putExtra("email",uemail);
+            startActivity(intent);
         }else if (id == R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this,LoginActivity.class); startActivity(intent);
@@ -282,7 +288,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                     return Attending_fragment.newInstance(uid);
                 }
                 case 2:{
-                    return LiveChatFragment.newInstance("",uid);
+                    return LiveChatFragment.newInstance(uname,uid);
                 }
             }
             return PlaceholderFragment.newInstance(1);

@@ -4,9 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VenYou.iml" filepath="$PROJECT_DIR$/VenYou.iml" />
       <module fileurl="file://C:\Kunal\Course\SE\Venu\VenYou-master\VenYou-master\VenYou.iml" filepath="C:\Kunal\Course\SE\Venu\VenYou-master\VenYou-master\VenYou.iml" />
-      <module fileurl="file://$PROJECT_DIR$/VenYou-master.iml" filepath="$PROJECT_DIR$/VenYou-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Kunal\Course\SE\Venu\VenYou-master\VenYou-master\app\app.iml" filepath="C:\Kunal\Course\SE\Venu\VenYou-master\VenYou-master\app\app.iml" />
+      <module fileurl="file://C:\Users\kupal\OneDrive\Documents\GitHub\VenYou\VenYou-master.iml" filepath="C:\Users\kupal\OneDrive\Documents\GitHub\VenYou\VenYou-master.iml" />
+      <module fileurl="file://C:/Kunal/Course/SE/Venu/VenYou-master/VenYou-master/app/app.iml" filepath="C:/Kunal/Course/SE/Venu/VenYou-master/VenYou-master/app/app.iml" />
     </modules>
   </component>
 </project>

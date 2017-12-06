@@ -97,24 +97,6 @@ public class Home_fragment extends android.support.v4.app.Fragment {
             }
         });
 
-//        FloatingActionButton chat = (FloatingActionButton) view.findViewById(R.id.chat_button);
-//        chat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-//            }
-//        });
-//
-//        FloatingActionButton addEvent = (FloatingActionButton) view.findViewById(R.id.addEvent_button);
-//        addEvent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                interfaceEventData.onClickAddEvent();
-//            }
-//        });
-
         return view;
 
     }

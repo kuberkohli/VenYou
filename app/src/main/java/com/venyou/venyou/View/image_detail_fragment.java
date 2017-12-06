@@ -74,6 +74,7 @@ public class image_detail_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_image_detail_fragment, container, false);
         url = mParam1;
         imageView = (ImageView) view.findViewById(R.id.imageDetail);
+        imageView.setTransitionName("ImageTransition");
         Picasso.with(getActivity()).load(url).into(imageView);
         return view;
     }

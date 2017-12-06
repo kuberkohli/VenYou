@@ -2,9 +2,13 @@ package com.venyou.venyou.View;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.transition.Fade;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.venyou.venyou.Controller.DetailsTransition;
 
 import c.R;
 
@@ -24,23 +28,9 @@ public class Gallery extends AppCompatActivity implements Gallery_fragment.OnFra
                 .commit();
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        FragmentManager manager = getSupportFragmentManager();
-//        if (manager.getBackStackEntryCount() > 1) {
-//            manager.popBackStack();
-//        } else {
-//            // if there is only one entry in the backstack, show the home screen
-//            moveTaskToBack(true);
-//            finish();
-//        }
-//    }
-
     @Override
     public void onFragmentInteraction(Uri uri) {
-//        Intent intent = new Intent(getApplicationContext(), ImageDetails.class);
-//        intent.putExtra("url", name);
-//        startActivity(intent);
+
     }
 
     @Override
@@ -50,8 +40,16 @@ public class Gallery extends AppCompatActivity implements Gallery_fragment.OnFra
 
     @Override
     public void dothis(int pos, View view, String name) {
+        ImageView image = (ImageView) view.findViewById(R.id.imageView);
+        image_detail_fragment fragment = image_detail_fragment.newInstance(name, "");
+        fragment.setSharedElementEnterTransition(new DetailsTransition());
+        fragment.setEnterTransition(new android.transition.Fade());
+        fragment.setExitTransition(new android.transition.Fade());
+        fragment.setSharedElementReturnTransition(new DetailsTransition());
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_container, image_detail_fragment.newInstance(name, ""))
+                .replace(R.id.main_container, fragment)
+                .addSharedElement(image, "ImageTransition")
+                .addToBackStack(null)
                 .commit();
     }
 }
