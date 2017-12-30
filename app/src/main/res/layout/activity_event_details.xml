@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="ActivityTransition"
+    android:background="#c1ecec"
     tools:context="com.venyou.venyou.View.EventDetails">
 
     <android.support.design.widget.AppBarLayout
@@ -24,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/paypal"
-        android:layout_marginTop="10dp">
+
+        >
 
         <LinearLayout
             android:id="@+id/list_item_layout"
@@ -32,21 +35,22 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/register_event"
             android:layout_alignParentStart="true"
-            android:background="#f7f9f9"
+            android:background="#c1ecec"
             android:clickable="true"
             android:gravity="center_vertical|center"
             android:orientation="vertical"
             android:paddingLeft="0dp">
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp">
 
                 <ImageView
+                    android:id="@+id/event_coverpic"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/event_coverpic"
-                    android:alpha="1"/>
+                    android:layout_alignParentTop="true"
+                    android:alpha="1" />
 
                 <!--<ImageView-->
                     <!--android:id="@+id/event_image"-->
@@ -65,7 +69,7 @@
                 android:paddingLeft="12dp"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="40dp"
+                android:textSize="30dp"
                 android:textStyle="italic" />
 
 
@@ -79,8 +83,9 @@
                 android:padding="12dp"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="30dp"
+                android:textSize="23dp"
                 android:textStyle="bold" />
+
 
             <RatingBar
                 android:id="@+id/host_ratings"
@@ -101,7 +106,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <!--<TextView-->
@@ -129,7 +134,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -143,7 +148,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -155,7 +160,7 @@
                 android:paddingLeft="12dp"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
 
@@ -170,7 +175,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -184,7 +189,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -198,7 +203,7 @@
                 android:singleLine="true"
                 android:text="Anything here"
                 android:textColor="#030303"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
 
@@ -209,24 +214,41 @@
     <Button
         android:id="@+id/paypal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_above="@+id/register_event"
         android:layout_alignParentStart="true"
+        android:textColor="#fafafa"
+        android:background="@android:drawable/dialog_holo_dark_frame"
         android:text="Pay - $2" />
+
+
+    <Button
+        android:id="@+id/commentButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_above="@+id/register_event"
+        android:layout_alignParentStart="true"
+        android:textColor="#fafafa"
+        android:background="@android:drawable/dialog_holo_dark_frame"
+        android:text="Reviews" />
 
     <Button
         android:id="@+id/register_event"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
+        android:textColor="#fafafa"
+        android:background="@android:drawable/dialog_holo_dark_frame"
         android:text="Register" />
 
     <Button
         android:id="@+id/photoBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:textColor="#fafafa"
         android:layout_marginBottom="0dp"
+        android:background="@android:drawable/dialog_holo_dark_frame"
         android:text="PhotoBox" />
 </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.venyou.venyou.View;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -41,13 +42,14 @@ import com.venyou.venyou.View.FacebookActivity;
 
 import java.util.HashMap;
 
-public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,Home_fragment.InterfaceEventData,Attending_fragment.InterfaceAttendEventData{
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,Home_fragment.InterfaceEventData,Attending_fragment.InterfaceAttendEventData, LiveChatFragment.OnFragmentInteractionListener{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private ImageView propic;
     String uname,uid,url,uemail;
     private DatabaseReference mRef;
+    FloatingActionButton chat,addEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +59,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -87,7 +86,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         textView_name.setText(uname);
         propic = (ImageView) view.findViewById(R.id.imageView);
 
-        FloatingActionButton chat = (FloatingActionButton) findViewById(R.id.chat_fbutton);
+        chat = (FloatingActionButton) findViewById(R.id.chat_fbutton);
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +95,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             }
         });
 
-        FloatingActionButton addEvent = (FloatingActionButton) findViewById(R.id.addEvent_fbutton);
+        addEvent = (FloatingActionButton) findViewById(R.id.addEvent_fbutton);
         addEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +144,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        }else {
             super.onBackPressed();
         }
     }
@@ -153,16 +154,21 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.profile) {
+        if (id == R.id.map) {
+            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.add_event) {
+            Intent intent = new Intent(Home.this,AddEvent.class);
+            intent.putExtra("name",uname);
+            intent.putExtra("id",uid);
+            intent.putExtra("email",uemail);
+            startActivity(intent);
+        }else if (id == R.id.chatbot) {
+            Intent intent = new Intent(Home.this,ChatActivity.class);
+            startActivity(intent);
+        }else if (id == R.id.profile) {
             Intent intent = new Intent(getApplicationContext(), MyProfile.class);
             intent.putExtra("name",uname);
             intent.putExtra("id",uid);
@@ -170,7 +176,6 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             intent.putExtra("email",uemail);
             startActivity(intent);
         } else if (id == R.id.logout) {
-//            LoginManager.getInstance().logOut();
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this,LoginActivity.class); startActivity(intent);
         }
@@ -183,23 +188,22 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(getApplicationContext(), MyProfile.class);
+            intent.putExtra("name",uname);
+            intent.putExtra("id",uid);
+            intent.putExtra("url",url);
+            intent.putExtra("email",uemail);
+            startActivity(intent);
         }else if (id == R.id.action_logout){
-//            LoginManager.getInstance().logOut();
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(this,LoginActivity.class); startActivity(intent);
         }
@@ -210,11 +214,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     @Override
     public void DisplayEventData(int position, HashMap<String, ?> eventDetails, View view, String name) {
         Intent intent = new Intent(getApplicationContext(), EventDetails.class);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(Home.this,view ,"ActivityTransition" );
         intent.putExtra("eventData", eventDetails);
         intent.putExtra("name",uname);
         intent.putExtra("id",uid);
         intent.putExtra("email",uemail);
-        startActivity(intent);
+         Home.this.startActivity(intent, options.toBundle());
     }
 
     @Override
@@ -233,23 +238,23 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         startActivity(intent);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void dothis(int pos, View view, String name) {
+
+    }
+
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -263,15 +268,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -280,23 +280,24 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
-                case 0:
+                case 0:{
                     return Home_fragment.newInstance();
-                case 1:
-                    return PlaceholderFragment.newInstance(position + 1);
-                case 2:
+                }
+                case 1:{
                     return Attending_fragment.newInstance(uid);
+                }
+                case 2:{
+                    return LiveChatFragment.newInstance(uname,uid);
+                }
             }
             return PlaceholderFragment.newInstance(1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
     }
 }
+//commit

@@ -21,6 +21,7 @@
     <string name="title_activity_event_details">EventDetails</string>
     <string name="title_activity_add_event">AddEvent</string>
     <string name="title_activity_my_profile">MyProfile</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources><!--<string name="facebook_app_id">1909920709023142</string>--><!--<string name="fb_login_protocol_scheme">fb1909920709023142</string>-->

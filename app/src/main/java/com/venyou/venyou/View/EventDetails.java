@@ -32,9 +32,9 @@ public class EventDetails extends AppCompatActivity {
     private float rating;
     private DatabaseReference mRef;
     private HashMap<String, ?> eventDetails;
-    private Button button, makePayment, photoBoxButton;
+    private Button button, makePayment, photoBoxButton, commentButton;
     private HashMap<String, ?> register_check;
-    String host_rating;
+    String host_rating, uname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class EventDetails extends AppCompatActivity {
         setContentView(R.layout.activity_event_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        uname = getIntent().getExtras().get("name").toString();
         name = (TextView) findViewById(R.id.event_name);
         city = (TextView) findViewById(R.id.event_city);
         street = (TextView) findViewById(R.id.event_street);
@@ -60,8 +60,22 @@ public class EventDetails extends AppCompatActivity {
         photoBoxButton.setVisibility(View.INVISIBLE);
         makePayment = (Button) findViewById(R.id.paypal);
         ratingBar = (RatingBar) findViewById(R.id.host_ratings);
+        commentButton = (Button) findViewById(R.id.commentButton);
+        commentButton.setVisibility(View.INVISIBLE);
 
         eventDetails = (HashMap<String, ?>) getIntent().getSerializableExtra("eventData");
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String currentDate = df.format(c.getTime());
+        String eventdate = (String) eventDetails.get("date");
+
+        if (currentDate.compareTo(eventdate) > 0) {
+            button.setVisibility(View.INVISIBLE);
+            makePayment.setVisibility(View.INVISIBLE);
+            photoBoxButton.setVisibility(View.INVISIBLE);
+            commentButton.setVisibility(View.INVISIBLE);
+        }
+
         final String event_name = (String) eventDetails.get("name");
         String uid = (String) getIntent().getExtras().get("id");
         mRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("events").getRef();
@@ -75,7 +89,6 @@ public class EventDetails extends AppCompatActivity {
                         if(event.get(event_name) != null){
                             button.setText("Unregister");
                             Calendar c = Calendar.getInstance();
-
                             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                             String currentDate = df.format(c.getTime());
                             String eventdate = (String) eventDetails.get("date");
@@ -84,6 +97,7 @@ public class EventDetails extends AppCompatActivity {
                                 button.setVisibility(View.INVISIBLE);
                                 makePayment.setVisibility(View.INVISIBLE);
                                 photoBoxButton.setVisibility(View.VISIBLE);
+                                commentButton.setVisibility(View.VISIBLE);
                             }
                         }
                     }
@@ -110,6 +124,7 @@ public class EventDetails extends AppCompatActivity {
         host_rating = (String) eventDetails.get("host_rating");
         rating = Float.parseFloat(host_rating);
         ratingBar.setRating(rating);
+
 //        Picasso.with(getApplicationContext()).load((String) eventDetails.get("image")).into(image);
         Picasso.with(getApplicationContext()).load((String) eventDetails.get("image")).into(coverpic);
         button.setOnClickListener(new View.OnClickListener() {
@@ -141,7 +156,17 @@ public class EventDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EventDetails.this, Gallery.class);
-                intent.putExtra("name",name.getText());
+                intent.putExtra("name",(String) eventDetails.get("name"));
+                startActivity(intent);
+            }
+        });
+
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EventDetails.this, CommentsActivity.class);
+                intent.putExtra("name",(String) eventDetails.get("name"));
+                intent.putExtra("uname", uname);
                 startActivity(intent);
             }
         });

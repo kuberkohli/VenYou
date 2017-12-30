@@ -1,5 +1,8 @@
 package com.venyou.venyou.View;
 
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
@@ -10,29 +13,37 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.venyou.venyou.Controller.PhotoFirebaseAdaptar;
 import com.venyou.venyou.Model.Image;
 import com.venyou.venyou.Model.ImageData;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import c.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Gallery_fragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Gallery_fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Gallery_fragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private Button button, chooseImage;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -42,7 +53,11 @@ public class Gallery_fragment extends Fragment {
     private static PhotoFirebaseAdaptar myFirebaseRecylerAdapter;
     private static RecyclerView recyclerView;
     String eventName;
-    int layoutType = 2;
+    int layoutType = 2, size;
+    int REQUEST_CODE;
+    private Uri imageUri;
+    DatabaseReference mRef;
+    Map<String, Object> pic = new HashMap<>();
 
     private LinearLayoutManager lm;
 
@@ -52,14 +67,6 @@ public class Gallery_fragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Gallery_fragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static Gallery_fragment newInstance(String param1, String param2) {
         Gallery_fragment fragment = new Gallery_fragment();
@@ -85,11 +92,9 @@ public class Gallery_fragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        if(eventName!=null){
-            eventName = mParam1;
-        }else{
-        eventName = "Adele Concert";
-        }
+
+        eventName = mParam1;
+//        eventName = "Adele Concert";
 
         childRef = FirebaseDatabase.getInstance().getReference().child("photbox").child(eventName).getRef();
 
@@ -114,18 +119,93 @@ public class Gallery_fragment extends Fragment {
             public void onItemClick(View view, int position, String name) {
                 if (observerData != null) {
 //                    final HashMap<String, ?> eventDetails = (HashMap<String, ?>) observerData.getItem(name);
-                    mListener.dothis(position,view,name);
+                    mListener.dothis(position, view, name);
 //                    normalClick(position, view, name);
                 }
             }
         });
+
+        mRef = FirebaseDatabase.getInstance().getReference().child("photbox").child(eventName).getRef();
+        if (mRef != null) {
+            mRef.addListenerForSingleValueEvent(new com.google.firebase.database.ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    HashMap<String, String> event = (HashMap<String, String>) dataSnapshot.getValue();
+                    size = event.size();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+        button = (Button) view.findViewById(R.id.photoBox_image_upload);
+        chooseImage = (Button) view.findViewById(R.id.choose_image_upload);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a storage reference from our app
+                FirebaseStorage storage = FirebaseStorage.getInstance("gs://venyou-1ca06.appspot.com/");
+                StorageReference storageRef = storage.getReference();
+                if (imageUri != null) {
+                    Uri file = imageUri;
+                    StorageReference riversRef = storageRef.child("photobox/" + file.getLastPathSegment());
+                    UploadTask uploadTask = riversRef.putFile(file);
+
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                            Snackbar.make(getView(), "Failed", Snackbar.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            size = size + 1;
+                            String item = "item"+Integer.toString(size);
+                            pic.put("id",item);
+                            pic.put("url", downloadUrl.toString());
+                            mRef.child(item).updateChildren(pic);
+
+                        }
+                    });
+                }else{
+                    Toast.makeText(getContext(),"Please choose an image to upload.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        chooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI),REQUEST_CODE);
+            }
+        });
+
         return view;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            imageUri = data.getData();
+
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onGalleryInteraction(uri);
         }
     }
 
@@ -146,19 +226,10 @@ public class Gallery_fragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onGalleryInteraction(Uri uri);
+
         void dothis(int pos, View view, String name);
     }
 
